@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { LivLogo } from "@/design-system/icons"
 import Components from "./docs/Components"
 import Foundations from "./docs/Foundations"
@@ -34,6 +34,14 @@ export default function App() {
     window.addEventListener("hashchange", onHash)
     return () => window.removeEventListener("hashchange", onHash)
   }, [])
+
+  // Keeps the current tab visible in the mobile row, which scrolls sideways.
+  const tabRow = useRef<HTMLElement>(null)
+  useEffect(() => {
+    tabRow.current
+      ?.querySelector('[aria-current="page"]')
+      ?.scrollIntoView({ block: "nearest", inline: "center" })
+  }, [page])
 
   const Active = PAGES.find((p) => p.id === page)!.Component
 
@@ -97,29 +105,36 @@ export default function App() {
 
         <div className="min-w-0 flex-1">
           <header className="sticky top-0 z-50 border-b border-border-subtle bg-surface-1/90 backdrop-blur-md lg:hidden">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 px-6 py-4">
-              <a href={`#${PAGES[0].id}`} className="flex items-center gap-2.5">
-                <LivLogo height={22} />
-                <span className="text-[14px] font-semibold text-white">
-                  Design System
-                </span>
-              </a>
-              <nav className="flex flex-1 flex-wrap gap-1">
-                {PAGES.map(({ id, label }) => (
-                  <a
-                    key={id}
-                    href={`#${id}`}
-                    className={`focus-ring flex h-9 items-center rounded-full px-4 text-[13px] font-medium transition-colors ${
-                      page === id
-                        ? "bg-surface-3 text-white"
-                        : "text-text-secondary hover:text-white"
-                    }`}
-                  >
-                    {label}
-                  </a>
-                ))}
-              </nav>
-            </div>
+            <a
+              href={`#${PAGES[0].id}`}
+              className="focus-ring flex items-center gap-2.5 px-5 pt-4 pb-3"
+            >
+              <LivLogo height={22} />
+              <span className="text-[14px] font-semibold text-white">
+                Design System
+              </span>
+            </a>
+            {/* One scrolling row rather than a wrapping block: five labels never
+                fit a phone, and wrapping leaves a ragged two-line stack. */}
+            <nav
+              ref={tabRow}
+              className="no-scrollbar flex gap-1 overflow-x-auto px-5 pb-3"
+            >
+              {PAGES.map(({ id, label }) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  aria-current={page === id ? "page" : undefined}
+                  className={`focus-ring flex h-9 shrink-0 items-center rounded-full px-4 text-[13px] font-medium transition-colors ${
+                    page === id
+                      ? "bg-surface-3 text-white"
+                      : "text-text-secondary hover:text-white"
+                  }`}
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
           </header>
 
           <main>

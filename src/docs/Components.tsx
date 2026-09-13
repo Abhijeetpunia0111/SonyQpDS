@@ -117,7 +117,7 @@ export default function Components() {
   const [filter, setFilter] = useState("All")
 
   return (
-    <div className="mx-auto max-w-5xl px-8 py-16">
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
       <PageHeader
         eyebrow="Components"
         title="Component library"

@@ -9,7 +9,7 @@ export default function Gallery() {
   const shown = focus ? screens.filter((s) => s.id === focus) : screens
 
   return (
-    <div className="mx-auto max-w-7xl px-8 py-16">
+    <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-16">
       <PageHeader
         eyebrow="Screens"
         title="Screen inventory"
