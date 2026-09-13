@@ -58,8 +58,8 @@ export default function FeaturedCard({
         </CircleButton>
       </div>
       <div className="absolute right-3 bottom-2.5">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#cfcfcf]">
-          <PlayFilled size={18} className="ml-0.5 text-[#2b2b2b]" />
+        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-action-muted">
+          <PlayFilled size={18} className="ml-0.5 text-action-on-primary" />
         </span>
       </div>
       <div className="absolute bottom-1.5 left-2 opacity-70">

@@ -13,21 +13,19 @@ import type { ReactElement } from "react"
 import CopyButton from "./CopyButton"
 import Section, { PageHeader } from "./Section"
 
-function Swatch({ value, name, usage, cssVar, contrast }: ColorToken) {
+function Swatch({ value, name, usage, cssVar, primitive }: ColorToken) {
   return (
     <div className="overflow-hidden rounded-xl bg-surface-2 ring-1 ring-border-subtle">
       <div
         className="flex h-20 w-full items-end justify-end p-2"
         style={{ background: value }}
       >
-        {contrast !== undefined && (
-          <span
-            className="rounded-md bg-black/55 px-1.5 py-0.5 font-mono text-[10px] text-white backdrop-blur-sm"
-            title="Contrast ratio against surface-2"
-          >
-            {contrast.toFixed(1)}:1
-          </span>
-        )}
+        <span
+          className="rounded-md bg-black/55 px-1.5 py-0.5 font-mono text-[10px] text-white"
+          title={`${name} aliases the primitive ${primitive}`}
+        >
+          {primitive}
+        </span>
       </div>
       <div className="p-3.5">
         <div className="flex items-center justify-between gap-2">

@@ -134,7 +134,7 @@ export default function SearchScreen({ typing = false }: { typing?: boolean }) {
             {recentSearches.map((r) => (
               <span
                 key={r}
-                className="flex h-12 items-center gap-2.5 rounded-full bg-surface-2 pr-5 pl-1.5"
+                className="flex h-12 items-center gap-2.5 rounded-full bg-chip pr-5 pl-1.5"
               >
                 <ThumbCluster label={r} />
                 <span className="text-[16px] font-normal text-white">{r}</span>

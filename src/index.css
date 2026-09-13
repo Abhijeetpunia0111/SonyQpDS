@@ -17,13 +17,14 @@
 
   /* Action */
   --color-action-primary: #ffffff;
-  --color-action-primary-end: #c9c9c9;
   --color-action-on-primary: #000000;
   --color-action-secondary: #1a1a1a;
+  --color-action-muted: #cfcfcf;
 
   /* Brand */
-  --color-gold: #f5c518;
-  --color-gold-dim: #c9a014;
+  --color-gold: #ffd600;
+  --color-gold-muted: #ffec28;
+  --color-gold-dim: #c9a800;
   --color-premium-start: #7818b4;
   --color-premium-end: #a21caf;
 

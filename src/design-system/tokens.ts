@@ -1,10 +1,61 @@
+/**
+ * Two layers, the way Figma Variables wants them.
+ *
+ * `primitives` is the raw ramp — the only place a literal hex appears.
+ * `colors` is the semantic layer: every entry points at a primitive by name,
+ * so a palette change happens in exactly one place. The screens only ever
+ * reference semantic tokens.
+ *
+ * The ramp was derived by auditing the colours the nine screens actually use,
+ * not invented up front: every primitive below is referenced by at least one
+ * semantic token, and every semantic token is used by at least one component.
+ */
+export type Primitive = {
+  name: string
+  value: string
+}
+
+export const primitives: Record<string, Primitive[]> = {
+  neutral: [
+    { name: "black", value: "#000000" },
+    { name: "neutral-950", value: "#0A0A0A" },
+    { name: "neutral-900", value: "#0D0D0D" },
+    { name: "neutral-850", value: "#1A1A1A" },
+    { name: "neutral-800", value: "#202020" },
+    { name: "neutral-750", value: "#262626" },
+    { name: "neutral-700", value: "#2B2B2B" },
+    { name: "neutral-600", value: "#333333" },
+    { name: "neutral-500", value: "#5C5C5C" },
+    { name: "neutral-400", value: "#8C8E8E" },
+    { name: "neutral-300", value: "#ACACAC" },
+    { name: "neutral-200", value: "#CFCFCF" },
+    { name: "white", value: "#FFFFFF" },
+  ],
+  yellow: [
+    { name: "yellow-300", value: "#FFEC28" },
+    { name: "yellow-500", value: "#FFD600" },
+    { name: "yellow-700", value: "#C9A800" },
+  ],
+  violet: [
+    { name: "violet-600", value: "#7818B4" },
+    { name: "magenta-600", value: "#A21CAF" },
+  ],
+  alpha: [{ name: "chip-fill", value: "#1D1F1E90" }],
+}
+
+const P = Object.fromEntries(
+  Object.values(primitives)
+    .flat()
+    .map((p) => [p.name, p.value]),
+)
+
 export type ColorToken = {
   name: string
   value: string
   cssVar: string
   usage: string
-  /** Contrast ratio of this colour as text on surface-2 (#1A1A1A). Null when it is not a text colour. */
-  contrast?: number
+  /** The primitive this semantic token aliases. */
+  primitive: string
 }
 
 export type ColorGroup = {
@@ -13,67 +64,51 @@ export type ColorGroup = {
   tokens: ColorToken[]
 }
 
+function token(
+  name: string,
+  primitive: string,
+  usage: string,
+): ColorToken {
+  return {
+    name,
+    primitive,
+    value: P[primitive],
+    cssVar: `--color-${name}`,
+    usage,
+  }
+}
+
 export const colors: ColorGroup[] = [
   {
     group: "Surface",
     description:
-      "Five steps from pure black upward. Elevation on this product is communicated by surface lightness, not by shadow — a card one step lighter than its parent reads as one step closer.",
+      "Steps up from the app background. Elevation on this product is communicated by surface lightness, not by shadow — a card one step lighter than its parent reads as one step closer.",
     tokens: [
-      {
-        name: "bg",
-        value: "#0A0A0A",
-        cssVar: "--color-bg",
-        usage: "App background and video letterbox",
-      },
-      {
-        name: "surface-1",
-        value: "#0D0D0D",
-        cssVar: "--color-surface-1",
-        usage: "Sheets and full-page panels",
-      },
-      {
-        name: "surface-2",
-        value: "#1A1A1A",
-        cssVar: "--color-surface-2",
-        usage: "Cards, list rows, chips, search field",
-      },
-      {
-        name: "surface-3",
-        value: "#262626",
-        cssVar: "--color-surface-3",
-        usage: "Floating navigation, circular overlay buttons",
-      },
-      {
-        name: "surface-4",
-        value: "#333333",
-        cssVar: "--color-surface-4",
-        usage: "Pressed state and skeleton blocks",
-      },
-      {
-        name: "art-placeholder",
-        value: "#202020",
-        cssVar: "--color-art-placeholder",
-        usage:
-          "Flat fill standing in for title art that has not been supplied yet",
-      },
-      {
-        name: "chip",
-        value: "#1D1F1E90",
-        cssVar: "--color-chip",
-        usage: "Chip fill — translucent, so chips sit on artwork as well as on the page",
-      },
-      {
-        name: "border-subtle",
-        value: "#2B2B2B",
-        cssVar: "--color-border-subtle",
-        usage: "Hairline dividers between list rows",
-      },
-      {
-        name: "border-strong",
-        value: "#5C5C5C",
-        cssVar: "--color-border-strong",
-        usage: "Selected chip outline, focus ring",
-      },
+      token("bg", "neutral-950", "App background and video letterbox"),
+      token("surface-1", "neutral-900", "Sheets and full-page panels"),
+      token(
+        "surface-2",
+        "neutral-850",
+        "Cards, list rows, search field, secondary button",
+      ),
+      token(
+        "surface-3",
+        "neutral-750",
+        "Floating navigation and circular overlay buttons",
+      ),
+      token("surface-4", "neutral-600", "Pressed state and avatar placeholder"),
+      token(
+        "art-placeholder",
+        "neutral-800",
+        "Flat fill standing in for title art that has not been supplied",
+      ),
+      token(
+        "chip",
+        "chip-fill",
+        "Chip fill — translucent, so chips read on artwork as well as on the page",
+      ),
+      token("border-subtle", "neutral-700", "Hairline dividers between rows"),
+      token("border-strong", "neutral-500", "Selected chip outline, focus ring"),
     ],
   },
   {
@@ -81,98 +116,69 @@ export const colors: ColorGroup[] = [
     description:
       "White is the primary action colour. The highest-priority button on any screen is the white one, and there is never more than one per view.",
     tokens: [
-      {
-        name: "action-primary",
-        value: "#FFFFFF",
-        cssVar: "--color-action-primary",
-        usage: "Primary button fill, active tab indicator, progress fill",
-      },
-      {
-        name: "action-primary-end",
-        value: "#C9C9C9",
-        cssVar: "--color-action-primary-end",
-        usage: "End stop of the primary button gradient",
-      },
-      {
-        name: "action-on-primary",
-        value: "#000000",
-        cssVar: "--color-action-on-primary",
-        usage: "Label and icon sitting on a white button",
-      },
-      {
-        name: "action-secondary",
-        value: "#1A1A1A",
-        cssVar: "--color-action-secondary",
-        usage:
-          "Secondary button fill — same value as surface-2, named separately so intent is explicit",
-      },
+      token(
+        "action-primary",
+        "white",
+        "Primary button fill, active tab indicator, progress fill",
+      ),
+      token(
+        "action-on-primary",
+        "black",
+        "Label and icon sitting on a white button",
+      ),
+      token(
+        "action-secondary",
+        "neutral-850",
+        "Secondary button fill — same step as surface-2, named separately so intent is explicit",
+      ),
+      token(
+        "action-muted",
+        "neutral-200",
+        "The soft-white play button that sits on artwork, where full white would glare",
+      ),
     ],
   },
   {
     group: "Brand",
     description:
-      "Gold is the paywall. It marks the logo, the Subscribe affordance, premium content and the active navigation item — nothing else. Purple appears only inside the Upgrade badge gradient.",
+      "Yellow is the paywall. It marks the logo, the Subscribe affordance, premium content and the active navigation item — nothing else. Violet appears only inside the Upgrade badge gradient.",
     tokens: [
-      {
-        name: "gold",
-        value: "#F5C518",
-        cssVar: "--color-gold",
-        usage: "Logo, Subscribe label, crown, IMDB rating, active nav icon",
-        contrast: 11.0,
-      },
-      {
-        name: "gold-dim",
-        value: "#C9A014",
-        cssVar: "--color-gold-dim",
-        usage: "Pressed state of a gold affordance",
-      },
-      {
-        name: "premium-start",
-        value: "#7818B4",
-        cssVar: "--color-premium-start",
-        usage: "Upgrade badge gradient, start stop",
-      },
-      {
-        name: "premium-end",
-        value: "#A21CAF",
-        cssVar: "--color-premium-end",
-        usage: "Upgrade badge gradient, end stop",
-      },
+      token(
+        "gold",
+        "yellow-500",
+        "Logo, Subscribe label, crown, IMDB rating, active nav icon",
+      ),
+      token(
+        "gold-muted",
+        "yellow-300",
+        "The lighter yellow in the logo mark and on bright artwork",
+      ),
+      token("gold-dim", "yellow-700", "Pressed state of a yellow affordance"),
+      token("premium-start", "violet-600", "Upgrade badge gradient, start stop"),
+      token("premium-end", "magenta-600", "Upgrade badge gradient, end stop"),
     ],
   },
   {
     group: "Text",
     description:
-      "Four steps, each verified against surface-2. text-disabled is deliberately below the 4.5:1 threshold and is therefore only ever used for non-essential text that is duplicated elsewhere.",
+      "Four steps. text-disabled sits below the WCAG AA threshold by design and is therefore only ever used for non-essential text that is duplicated elsewhere on the same row.",
     tokens: [
-      {
-        name: "text-primary",
-        value: "#FFFFFF",
-        cssVar: "--color-text-primary",
-        usage: "Titles, button labels, list row titles",
-        contrast: 18.9,
-      },
-      {
-        name: "text-secondary",
-        value: "#ACACAC",
-        cssVar: "--color-text-secondary",
-        usage: "Synopsis, metadata rows, inactive tab labels",
-        contrast: 8.2,
-      },
-      {
-        name: "text-tertiary",
-        value: "#8C8E8E",
-        cssVar: "--color-text-tertiary",
-        usage: "Row subtitles, file sizes, inactive nav icons",
-        contrast: 5.4,
-      },
-      {
-        name: "text-disabled",
-        value: "#5C5C5C",
-        cssVar: "--color-text-disabled",
-        usage: "Unavailable download, placeholder text",
-        contrast: 2.4,
-      },
+      token("text-primary", "white", "Titles, button labels, list row titles"),
+      token(
+        "text-secondary",
+        "neutral-300",
+        "Synopsis, metadata rows, inactive tab labels",
+      ),
+      token(
+        "text-tertiary",
+        "neutral-400",
+        "Row subtitles, file sizes, inactive nav icons",
+      ),
+      token(
+        "text-disabled",
+        "neutral-500",
+        "Unavailable download, placeholder text",
+      ),
     ],
   },
 ]
@@ -186,7 +192,7 @@ export const gradients = [
   },
   {
     name: "gradient-premium",
-    css: "linear-gradient(90deg, #7818B4 0%, #A21CAF 100%)",
+    css: `linear-gradient(90deg, ${P["violet-600"]} 0%, ${P["magenta-600"]} 100%)`,
     usage:
       "The Upgrade badge on the subscription card. Not available for any other element.",
   },
@@ -415,14 +421,40 @@ type DtcgGroup = { [key: string]: DtcgToken | DtcgGroup }
  * cannot be expressed as variables at all and are therefore omitted — create
  * them as Figma styles from the three entries on the Foundations page.
  */
+function familyOf(primitive: string) {
+  for (const [family, list] of Object.entries(primitives)) {
+    if (list.some((v) => v.name === primitive)) return family
+  }
+  return "neutral"
+}
+
 export const figmaVariables: DtcgGroup = {
-  color: Object.fromEntries(
+  primitive: Object.fromEntries(
+    Object.entries(primitives).map(([family, list]) => [
+      family,
+      Object.fromEntries(
+        list.map((v) => [
+          v.name,
+          {
+            $type: "color",
+            $value: v.value,
+            $description: "Raw ramp value — alias this, do not use it directly",
+          },
+        ]),
+      ),
+    ]),
+  ),
+  semantic: Object.fromEntries(
     colors.map((g) => [
       g.group.toLowerCase(),
       Object.fromEntries(
-        g.tokens.map((t) => [
-          t.name,
-          { $type: "color", $value: t.value, $description: t.usage },
+        g.tokens.map((tk) => [
+          tk.name,
+          {
+            $type: "color",
+            $value: `{primitive.${familyOf(tk.primitive)}.${tk.primitive}}`,
+            $description: tk.usage,
+          },
         ]),
       ),
     ]),
@@ -448,18 +480,18 @@ export const figmaVariables: DtcgGroup = {
       },
     },
     size: Object.fromEntries(
-      typography.map((t) => [
-        t.name,
-        { $type: "number", $value: t.size, $description: t.usage },
+      typography.map((tk) => [
+        tk.name,
+        { $type: "number", $value: tk.size, $description: tk.usage },
       ]),
     ),
     lineHeight: Object.fromEntries(
-      typography.map((t) => [
-        t.name,
+      typography.map((tk) => [
+        tk.name,
         {
           $type: "number",
-          $value: t.lineHeight,
-          $description: `Line height for ${t.name}`,
+          $value: tk.lineHeight,
+          $description: `Line height for ${tk.name}`,
         },
       ]),
     ),

@@ -42,7 +42,7 @@ export default function BottomNav({ active }: { active: NavKey }) {
                   className="absolute -bottom-2.5 h-8 w-10 rounded-full opacity-70 blur-md"
                   style={{
                     background:
-                      "radial-gradient(ellipse at center, rgba(245,197,24,0.55), transparent 70%)",
+                      "radial-gradient(ellipse at center, color-mix(in srgb, var(--color-gold) 55%, transparent), transparent 70%)",
                   }}
                 />
               )}

@@ -44,7 +44,7 @@ export default function Tokens() {
 
       <Section
         title="Figma Variables"
-        description="W3C Design Tokens (DTCG) format, which both the Figma Variables import plugins and Tokens Studio read. Download the file, then in Figma open the plugin and choose Import — collections are created for color, spacing, radius and font."
+        description="W3C Design Tokens (DTCG) format, which both the Figma Variables import plugins and Tokens Studio read. Two colour collections: primitive holds the raw ramp, semantic aliases it by reference, so repainting the product is a change to one primitive rather than to forty screens. Download the file, then open the plugin in Figma and choose Import."
         aside={
           <div className="flex gap-2">
             <CopyButton value={figmaJson} label="Copy" />
