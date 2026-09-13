@@ -69,12 +69,10 @@ export default function HomeScreen() {
           <p className="absolute bottom-5 left-5 text-[13px] text-text-secondary">
             4 Languages &nbsp;•&nbsp; Comedy, Family
           </p>
-          <div className="absolute right-4 bottom-14">
+          <div className="absolute right-4 bottom-4 flex flex-col items-center gap-3">
             <CircleButton size={40} label="Add to watchlist">
               <Plus size={20} />
             </CircleButton>
-          </div>
-          <div className="absolute right-4 bottom-4">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-action-muted">
               <PlayFilled size={18} className="ml-0.5 text-action-on-primary" />
             </span>
