@@ -1,5 +1,6 @@
 import type { ReactElement } from "react"
 import { iconUrl } from "@/data/icons"
+import livLogoUrl from "@/assets/livlogo.svg"
 
 type IconProps = {
   size?: number
@@ -54,31 +55,11 @@ const base = (size: number) => ({
 export function LivLogo({ height = 26 }: { height?: number }) {
   return (
     <span
-      className="inline-flex items-center text-gold"
+      className="inline-flex items-center"
       style={{ height, lineHeight: 1 }}
       aria-label="liv"
     >
-      <span
-        className="font-black tracking-[-0.04em]"
-        style={{ fontSize: height, lineHeight: 0.92 }}
-      >
-        li
-      </span>
-      <svg
-        width={height * 0.78}
-        height={height}
-        viewBox="0 0 20 26"
-        fill="none"
-        aria-hidden
-      >
-        <path
-          d="M2 12.5 L7.4 22.5 L18.5 2.2"
-          stroke="currentColor"
-          strokeWidth="3.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <img src={livLogoUrl} alt="" width={height * 1.6} height={height} />
     </span>
   )
 }
@@ -622,6 +603,45 @@ function Raw_StatusBattery({ size = 22, className = "" }: IconProps) {
         d="M22.6 4.4v3.2"
         stroke="currentColor"
         strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+/** Not part of the Figma icon set — used only by the interactivity gallery. */
+export function PauseFilled({ size = 20, className = "" }: IconProps) {
+  return (
+    <svg {...base(size)} className={className} fill="currentColor" aria-hidden>
+      <rect x="6" y="4.5" width="4.2" height="15" rx="1.4" />
+      <rect x="13.8" y="4.5" width="4.2" height="15" rx="1.4" />
+    </svg>
+  )
+}
+
+/** Not part of the Figma icon set — used only by the interactivity gallery. */
+export function Expand({ size = 20, className = "" }: IconProps) {
+  return (
+    <svg {...base(size)} className={className} fill="none" aria-hidden>
+      <path
+        d="M14.5 3.5h6v6M9.5 20.5h-6v-6M20.5 3.5l-7.5 7.5M3.5 20.5 11 13"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+/** Not part of the Figma icon set — used only by the interactivity gallery. */
+export function Close({ size = 20, className = "" }: IconProps) {
+  return (
+    <svg {...base(size)} className={className} fill="none" aria-hidden>
+      <path
+        d="M5.5 5.5l13 13M18.5 5.5l-13 13"
+        stroke="currentColor"
+        strokeWidth="1.9"
         strokeLinecap="round"
       />
     </svg>

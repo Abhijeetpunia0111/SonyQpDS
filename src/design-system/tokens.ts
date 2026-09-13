@@ -19,12 +19,12 @@ export const primitives: Record<string, Primitive[]> = {
   neutral: [
     { name: "black", value: "#000000" },
     { name: "neutral-950", value: "#0A0A0A" },
-    { name: "neutral-900", value: "#0D0D0D" },
-    { name: "neutral-850", value: "#1A1A1A" },
+    { name: "neutral-900", value: "#101010" },
+    { name: "neutral-850", value: "#161616" },
     { name: "neutral-800", value: "#202020" },
-    { name: "neutral-750", value: "#262626" },
-    { name: "neutral-700", value: "#2B2B2B" },
-    { name: "neutral-600", value: "#333333" },
+    { name: "neutral-750", value: "#282828" },
+    { name: "neutral-700", value: "#303030" },
+    { name: "neutral-600", value: "#404040" },
     { name: "neutral-500", value: "#5C5C5C" },
     { name: "neutral-400", value: "#8C8E8E" },
     { name: "neutral-300", value: "#ACACAC" },
@@ -82,7 +82,7 @@ export const colors: ColorGroup[] = [
   {
     group: "Surface",
     description:
-      "Steps up from the app background. Elevation on this product is communicated by surface lightness, not by shadow — a card one step lighter than its parent reads as one step closer.",
+      "Sampled from the screens themselves: every value below was measured off the Figma export rather than chosen. Elevation is communicated by surface lightness, not by shadow — a card one step lighter than its parent reads as one step closer.",
     tokens: [
       token("bg", "neutral-950", "App background and video letterbox"),
       token("surface-1", "neutral-900", "Sheets and full-page panels"),
@@ -96,7 +96,7 @@ export const colors: ColorGroup[] = [
         "neutral-750",
         "Floating navigation and circular overlay buttons",
       ),
-      token("surface-4", "neutral-600", "Pressed state and avatar placeholder"),
+      token("surface-4", "neutral-750", "Pressed state and avatar placeholder"),
       token(
         "art-placeholder",
         "neutral-800",
@@ -108,7 +108,7 @@ export const colors: ColorGroup[] = [
         "Chip fill — translucent, so chips read on artwork as well as on the page",
       ),
       token("border-subtle", "neutral-700", "Hairline dividers between rows"),
-      token("border-strong", "neutral-500", "Selected chip outline, focus ring"),
+      token("border-strong", "neutral-600", "Selected chip outline, focus ring"),
     ],
   },
   {

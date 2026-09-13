@@ -31,5 +31,6 @@ export const OUTLINE: Record<string, string[]> = {
     "CircleButton + Avatar",
     "EmptyState",
   ],
+  interactivity: [],
   tokens: ["Figma Variables", "Tailwind v4 @theme", "Flat JSON"],
 }
