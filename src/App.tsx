@@ -19,7 +19,7 @@ const PAGES = [
 type PageId = (typeof PAGES)[number]["id"]
 
 function readHash(): PageId {
-  const id = window.location.hash.replace("#", "")
+  const id = window.location.hash.replace("#", "").split("?", 1)[0]
   return PAGES.some((p) => p.id === id) ? (id as PageId) : PAGES[0].id
 }
 

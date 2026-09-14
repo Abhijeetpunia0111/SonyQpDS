@@ -270,6 +270,20 @@ function Lightbox({
 type Tab = "video" | "images"
 type Filter = "all" | Platform
 
+const allMedia = [...videos, ...images]
+
+function mediaFromUrl() {
+  const query = window.location.hash.split("?", 2)[1]
+  const id = query ? new URLSearchParams(query).get("media") : null
+  return allMedia.find((item) => item.id === id) ?? null
+}
+
+function mediaHash(item?: MediaItem) {
+  return item
+    ? `#interactivity?media=${encodeURIComponent(item.id)}`
+    : "#interactivity"
+}
+
 const PLATFORMS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
   { id: "android", label: "Android" },
@@ -311,7 +325,27 @@ function Pill({
 export default function Interactivity() {
   const [tab, setTab] = useState<Tab>("video")
   const [platform, setPlatform] = useState<Filter>("all")
-  const [expanded, setExpanded] = useState<MediaItem | null>(null)
+  const [expanded, setExpanded] = useState<MediaItem | null>(mediaFromUrl)
+
+  useEffect(() => {
+    const syncExpanded = () => setExpanded(mediaFromUrl())
+    window.addEventListener("hashchange", syncExpanded)
+    window.addEventListener("popstate", syncExpanded)
+    return () => {
+      window.removeEventListener("hashchange", syncExpanded)
+      window.removeEventListener("popstate", syncExpanded)
+    }
+  }, [])
+
+  const expand = (item: MediaItem) => {
+    setExpanded(item)
+    window.history.pushState(null, "", mediaHash(item))
+  }
+
+  const closeExpanded = () => {
+    setExpanded(null)
+    window.history.replaceState(null, "", mediaHash())
+  }
 
   const counts = useMemo(
     () => ({
@@ -373,12 +407,12 @@ export default function Interactivity() {
 
       <div className="columns-1 gap-8 md:columns-2 xl:columns-3">
         {items.map((item) => (
-          <Card key={item.id} item={item} onExpand={setExpanded} />
+          <Card key={item.id} item={item} onExpand={expand} />
         ))}
       </div>
 
       {expanded && (
-        <Lightbox item={expanded} onClose={() => setExpanded(null)} />
+        <Lightbox item={expanded} onClose={closeExpanded} />
       )}
     </div>
   )
