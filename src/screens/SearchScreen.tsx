@@ -1,9 +1,15 @@
 import { useState } from "react"
+
 import Artwork from "@/design-system/components/Artwork"
+
 import Chip from "@/design-system/components/Chip"
-import PosterCard from "@/design-system/components/PosterCard"
+
+import Card from "@/design-system/components/Card"
+
 import Screen from "@/design-system/components/Screen"
+
 import SearchField from "@/design-system/components/SearchField"
+
 import {
   Clapper,
   GridFour,
@@ -11,6 +17,7 @@ import {
   SearchGlass,
   SportsBall,
 } from "@/design-system/icons"
+
 import {
   recentSearches,
   searchFilters,
@@ -20,16 +27,21 @@ import {
 
 const FILTER_ICONS = [
   <GridFour key="all" size={17} />,
+
   <Clapper key="movies" size={17} />,
+
   <LivLogo key="originals" height={15} />,
+
   <SportsBall key="sports" size={17} />,
 ]
 
 export function FilterChips({
   active,
+
   onChange,
 }: {
   active: string
+
   onChange: (f: string) => void
 }) {
   return (
@@ -52,12 +64,14 @@ export function PosterGrid({ titles }: { titles: { name: string }[] }) {
   return (
     <div className="grid grid-cols-3 gap-2 px-4">
       {titles.map((t, i) => (
-        <PosterCard
+        <Card
           key={t.name}
+          ratio="2:3"
+          size="sm"
           title={t.name}
           fluid
           premium={i % 4 === 0}
-          newRelease={i === 1}
+          tags={i === 1}
         />
       ))}
     </div>
@@ -65,6 +79,7 @@ export function PosterGrid({ titles }: { titles: { name: string }[] }) {
 }
 
 /** The three overlapping mini-posters that sit inside a recent-search chip. */
+
 function ThumbCluster({ label }: { label: string }) {
   return (
     <span className="flex shrink-0 items-center">

@@ -3,15 +3,22 @@ import type { ReactNode } from "react"
 export type CircleTone = "overlay" | "solid"
 
 /** The circular control that sits on top of artwork: add-to-list, play, back. */
+
 export default function CircleButton({
   children,
+
   size = 40,
+
   tone = "overlay",
+
   label,
 }: {
   children: ReactNode
+
   size?: number
+
   tone?: CircleTone
+
   label: string
 }) {
   return (

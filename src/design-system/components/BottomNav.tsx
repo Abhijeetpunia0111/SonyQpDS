@@ -4,20 +4,26 @@ import {
   NavHome,
   NavSearch,
 } from "@/design-system/icons"
+
 import Avatar from "./Avatar"
 
 export type NavKey = "home" | "search" | "premium" | "downloads" | "profile"
 
 type NavItem = {
   key: NavKey
+
   label: string
 }
 
 const ITEMS: NavItem[] = [
   { key: "home", label: "Home" },
+
   { key: "search", label: "Search" },
+
   { key: "premium", label: "Premium" },
+
   { key: "downloads", label: "Downloads" },
+
   { key: "profile", label: "Profile" },
 ]
 
@@ -27,7 +33,9 @@ export default function BottomNav({ active }: { active: NavKey }) {
       <nav className="pointer-events-auto flex items-center gap-1 rounded-[28px] bg-surface-3/92 px-3 py-2.5 shadow-nav backdrop-blur-xl">
         {ITEMS.map((item) => {
           const isActive = item.key === active
+
           const tint = isActive ? "text-gold" : "text-text-tertiary"
+
           return (
             <button
               key={item.key}

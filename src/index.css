@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,900;1,14..32,400;1,14..32,600&family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,900;1,14..32,400;1,14..32,600&family=Poppins:ital,wght@1,700&family=Great+Vibes&display=swap');
 @import 'tailwindcss';
 
 @theme {
@@ -27,6 +27,7 @@
   --color-gold-dim: #c9a800;
   --color-premium-start: #7818b4;
   --color-premium-end: #a21caf;
+  --color-live: #f53131;
 
   /* Text */
   --color-text-primary: #ffffff;
@@ -119,6 +120,11 @@ body {
     outline: 2px solid var(--color-action-primary);
     outline-offset: 2px;
   }
+}
+
+/* The New Release tag is set in Poppins Bold Italic in the Figma card set. */
+@utility font-poppins {
+  font-family: 'Poppins', 'Inter', sans-serif;
 }
 
 /* Stand-in for baked-in key art lettering. Not part of the type scale. */

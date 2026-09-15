@@ -1,7 +1,11 @@
 import Artwork from "@/design-system/components/Artwork"
+
 import EmptyState from "@/design-system/components/EmptyState"
-import FeaturedCard from "@/design-system/components/FeaturedCard"
+
+import Banner from "@/design-system/components/Banner"
+
 import Screen from "@/design-system/components/Screen"
+
 import {
   AlertTriangle,
   ChevronRight,
@@ -12,37 +16,58 @@ import {
 
 type Item = {
   name: string
+
   meta: string
+
   stack?: boolean
+
   premium?: boolean
+
   action: "chevron" | "delete" | "progress"
+
   unavailable?: boolean
 }
 
 const ITEMS: Item[] = [
   {
     name: "Taarak Mehta Ka Ooltah Chasma",
+
     meta: "5 videos • 1.20 GB",
+
     stack: true,
+
     action: "chevron",
   },
+
   {
     name: "Good bad Girl",
+
     meta: "1h30m • 1.3 GB",
+
     premium: true,
+
     action: "delete",
   },
+
   { name: "Bahubali", meta: "1h30m • 1.3 GB", premium: true, action: "delete" },
+
   {
     name: "Clash Of The Titans",
+
     meta: "Content is no longer available",
+
     action: "delete",
+
     unavailable: true,
   },
+
   {
     name: "The Super Mario Galaxy",
+
     meta: "1h46m • 1.25 GB",
+
     premium: true,
+
     action: "progress",
   },
 ]
@@ -109,13 +134,14 @@ export default function DownloadsScreen({
         </div>
       ) : (
         <>
-          <FeaturedCard
-            title="Maharani 4"
-            banner="India's Biggest Political Thriller"
-            label="Sony LIV Originals"
-            flag={{ text: "New Episode Available", withBolt: false }}
-            meta="2021 • U • Hindi + 4 Languages • 4 Seasons • Action, Adventure"
-          />
+          <div className="mx-4">
+            <Banner
+              ratio="16:9"
+              title="Maharani 4"
+              meta="2021 • U • Hindi + 4 Languages • 4 Seasons • Action, Adventure"
+              fluid
+            />
+          </div>
 
           <ul className="mt-7 space-y-5 px-4">
             {ITEMS.map((item) => (

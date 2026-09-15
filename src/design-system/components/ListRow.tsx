@@ -18,7 +18,7 @@ export default function ListRow({
 }) {
   return (
     <div
-      className={`flex items-center gap-2.5 px-3.5 py-2.5 ${
+      className={`flex items-center gap-3 px-4 py-3 ${
         bare ? "" : "rounded-xl bg-surface-2"
       }`}
     >

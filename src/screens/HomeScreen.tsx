@@ -1,13 +1,23 @@
 import Artwork from "@/design-system/components/Artwork"
+
 import Avatar from "@/design-system/components/Avatar"
+
 import Badge from "@/design-system/components/Badge"
+
 import Chip from "@/design-system/components/Chip"
+
 import CircleButton from "@/design-system/components/CircleButton"
-import LandscapeCard from "@/design-system/components/LandscapeCard"
-import PosterCard from "@/design-system/components/PosterCard"
+
+import Banner from "@/design-system/components/Banner"
+
+import Card from "@/design-system/components/Card"
+
 import Rail from "@/design-system/components/Rail"
+
 import Screen from "@/design-system/components/Screen"
+
 import SectionHeader from "@/design-system/components/SectionHeader"
+
 import {
   Bolt,
   ChevronDown,
@@ -16,7 +26,9 @@ import {
   PlayFilled,
   Plus,
 } from "@/design-system/icons"
+
 import { hasArtwork } from "@/data/artwork"
+
 import { categories, continueWatching, mustWatch } from "@/data/content"
 
 export default function HomeScreen() {
@@ -48,35 +60,15 @@ export default function HomeScreen() {
       <div className="relative mt-1">
         <span className="absolute top-10 -left-1 h-[360px] w-3 rounded-r-lg bg-art-placeholder" />
         <span className="absolute top-10 -right-1 h-[360px] w-3 rounded-l-lg bg-art-placeholder" />
-        <div className="relative mx-4 aspect-[380/487] overflow-hidden rounded-2xl ring-1 ring-white/10">
-          <Artwork
+        <div className="relative mx-4">
+          <Banner
+            ratio="hero"
             title="Madhuvidhu"
-            className="h-full w-full"
+            keyArt="Madhuvidhu"
+            languages="4 Languages"
+            genres="Comedy, Family"
+            fluid
           />
-          <div className="absolute top-3.5 left-3.5">
-            <Badge
-              tone="onMedia"
-              icon={<Bolt size={14} className="text-gold" />}
-            >
-              New Release
-            </Badge>
-          </div>
-          {!hasArtwork("Madhuvidhu") && (
-            <p className="font-keyart absolute right-4 bottom-14 left-5 text-[46px] leading-none text-white">
-              Madhuvidhu
-            </p>
-          )}
-          <p className="absolute bottom-5 left-5 text-[13px] text-text-secondary">
-            4 Languages &nbsp;•&nbsp; Comedy, Family
-          </p>
-          <div className="absolute right-4 bottom-4 flex flex-col items-center gap-3">
-            <CircleButton size={40} label="Add to watchlist">
-              <Plus size={20} />
-            </CircleButton>
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-action-muted">
-              <PlayFilled size={18} className="ml-0.5 text-action-on-primary" />
-            </span>
-          </div>
         </div>
       </div>
 
@@ -84,11 +76,15 @@ export default function HomeScreen() {
         <SectionHeader title="Continue Watching For Satish" />
         <Rail>
           {continueWatching.map((t) => (
-            <LandscapeCard
+            <Card
               key={t.name}
+              ratio="16:9"
+              size="md"
               title={t.name}
-              meta={t.meta}
               progress={t.progress}
+              heading={t.name}
+              supporting={t.meta}
+              premium={false}
             />
           ))}
         </Rail>
@@ -98,11 +94,13 @@ export default function HomeScreen() {
         <SectionHeader title="Must Watch Movies" />
         <Rail>
           {mustWatch.map((t, i) => (
-            <PosterCard
+            <Card
               key={t.name}
+              ratio="2:3"
+              size="sm"
               title={t.name}
-              width={118}
               premium={i % 2 === 0}
+              tags={false}
             />
           ))}
         </Rail>
@@ -112,7 +110,14 @@ export default function HomeScreen() {
         <SectionHeader title="Trending Now" />
         <Rail>
           {[...mustWatch].reverse().map((t, i) => (
-            <PosterCard key={t.name} title={t.name} width={118} rank={i + 1} />
+            <Card
+              key={t.name}
+              ratio="2:3"
+              size="sm"
+              title={t.name}
+              premium={i === 0}
+              tags={i === 1}
+            />
           ))}
         </Rail>
       </div>

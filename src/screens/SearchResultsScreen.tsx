@@ -1,11 +1,19 @@
 import { useState } from "react"
+
 import Artwork from "@/design-system/components/Artwork"
-import FeaturedCard from "@/design-system/components/FeaturedCard"
+
+import Banner from "@/design-system/components/Banner"
+
 import Rail from "@/design-system/components/Rail"
+
 import Screen from "@/design-system/components/Screen"
+
 import SearchField from "@/design-system/components/SearchField"
+
 import { Crown } from "@/design-system/icons"
+
 import { relatedVideos, searchFilters, trendingSearches } from "@/data/content"
+
 import { FilterChips, PosterGrid } from "./SearchScreen"
 
 export default function SearchResultsScreen() {
@@ -22,13 +30,14 @@ export default function SearchResultsScreen() {
         </div>
       }
     >
-      <FeaturedCard
-        title="Maharani 4"
-        banner="India's Biggest Political Thriller"
-        label="Sony LIV Originals"
-        flag={{ text: "New Release" }}
-        meta="2021 • U • Hindi + 4 Languages • 4 Seasons • Action, Adventure"
-      />
+      <div className="mx-4">
+        <Banner
+          ratio="16:9"
+          title="Maharani 4"
+          meta="2021 • U • Hindi + 4 Languages • 4 Seasons • Action, Adventure"
+          fluid
+        />
+      </div>
 
       <h2 className="mt-6 px-4 text-[19px] font-medium text-white">
         Related Videos
@@ -38,10 +47,7 @@ export default function SearchResultsScreen() {
           {relatedVideos.map((v, i) => (
             <div key={v.name} className="w-[130px] shrink-0">
               <div className="relative aspect-16/9 w-full">
-                <Artwork
-                  title={v.name}
-                  className="h-full w-full rounded-md"
-                />
+                <Artwork title={v.name} className="h-full w-full rounded-md" />
                 {i === 2 && (
                   <Crown
                     size={15}

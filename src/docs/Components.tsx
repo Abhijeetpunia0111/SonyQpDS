@@ -2,8 +2,10 @@ import { useState } from "react"
 import type { ReactNode } from "react"
 import Avatar from "@/design-system/components/Avatar"
 import Badge from "@/design-system/components/Badge"
+import Banner from "@/design-system/components/Banner"
 import BottomNav from "@/design-system/components/BottomNav"
 import Button from "@/design-system/components/Button"
+import Card from "@/design-system/components/Card"
 import Chip from "@/design-system/components/Chip"
 import CircleButton from "@/design-system/components/CircleButton"
 import EmptyState from "@/design-system/components/EmptyState"
@@ -108,6 +110,27 @@ function Specimen({
     </section>
   )
 }
+
+const CARD_USAGE = `<Card title="Maharani 4" ratio="2:3" size="md" premium live tags />
+
+<Card
+  ratio="16:9"
+  size="md"
+  title="Karapuu"
+  progress={64}
+  heading="Karapuu"
+  supporting="2H 9m left"
+/>
+
+<Card title="Sports" ratio="1:1" size="lg" shape="circle" />`
+
+const BANNER_USAGE = `<Banner
+  ratio="hero"
+  title="Madhuvidhu"
+  keyArt="Madhuvidhu"
+  languages="4 Languages"
+  genres="Comedy, Family"
+/>`
 
 const TITLES = ["Maharani 4", "Shaitaan", "Scam 1992", "Rocket Boys"]
 
@@ -365,10 +388,219 @@ export default function Components() {
           </Badge>
           <Badge tone="premium">Upgrade</Badge>
           <Badge tone="certification">U/A 13+</Badge>
+          <Badge tone="live">LIVE</Badge>
           <Badge tone="neutral">4 Seasons</Badge>
         </div>
       </Specimen>
 
+      <Specimen
+        name="Card"
+        purpose="The catalogue card, transcribed from the four Figma component sets. Property names follow Figma — tags is the New Release pill, play is the corner wash, belowText toggles the caption — so a spec and an implementation can be diffed without translation."
+        props={[
+          {
+            name: "title",
+            type: "string",
+            description:
+              "Seeds the placeholder artwork and names the card for assistive tech.",
+          },
+          {
+            name: "ratio",
+            type: '"16:9" | "2:3" | "1:1"',
+            default: '"16:9"',
+            description: "Selects the component set. Each carries its own size ramp.",
+          },
+          {
+            name: "size",
+            type: '"xs" | "sm" | "md" | "lg"',
+            default: '"md"',
+            description:
+              "16:9 is 121/159/186/380; 2:3 is 121/186/251; 1:1 is 121/163/251. xs exists only at 16:9.",
+          },
+          {
+            name: "shape",
+            type: '"square" | "circle"',
+            default: '"square"',
+            description:
+              "Circle applies at 1:1 and suppresses every overlay — Figma gates them all behind square.",
+          },
+          {
+            name: "premium",
+            type: "boolean",
+            default: "true",
+            description: "Crown inside its gradient corner wash, scaled per size.",
+          },
+          {
+            name: "live",
+            type: "boolean",
+            default: "false",
+            description:
+              "LIVE badge, top-right. 16:9 uses a compact scale; the rest use the standard one.",
+          },
+          {
+            name: "tags",
+            type: "boolean",
+            default: "true",
+            description: "The New Release pill, centred on the bottom edge.",
+          },
+          {
+            name: "play",
+            type: "boolean",
+            default: "false",
+            description:
+              "Bottom-left play wash. Suppressed on a continue card, which has its own.",
+          },
+          {
+            name: "progress",
+            type: "number",
+            description:
+              "0–100. Selects the continue variant: centre play button and a track.",
+          },
+          {
+            name: "belowText",
+            type: "boolean",
+            default: "true",
+            description: "The caption. Only 16:9 xs/sm/md/continue define one.",
+          },
+          {
+            name: "heading / supporting",
+            type: "string",
+            description:
+              "Caption lines. 12/10px at xs and sm, 14/12px at md and continue.",
+          },
+        ]}
+        dos={[
+          "Pick the ratio by content type — 2:3 is the catalogue, 16:9 is a moment inside a title.",
+          "Let the size ramp choose the width; the overlay scales are tied to it.",
+          "Pass progress on a resumable card — it is the only thing that says you can carry on.",
+        ]}
+        donts={[
+          "Don't use circle outside 1:1; the crop assumes a square source and drops every badge.",
+          "Don't expect a caption on 2:3 or 1:1 — those sets are bare artwork in Figma.",
+          "Don't combine play with progress; the continue variant owns the centre of the card.",
+        ]}
+        code={CARD_USAGE}
+      >
+        <div className="space-y-8">
+          <div>
+            <p className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-text-tertiary uppercase">
+              16:9 — extra small / small / regular / continue / large
+            </p>
+            <div className="flex flex-wrap items-start gap-4">
+              <Card ratio="16:9" size="xs" title="Gullak" play />
+              <Card ratio="16:9" size="sm" title="Rocket Boys" live />
+              <Card ratio="16:9" size="md" title="Scam 1992" live />
+              <Card
+                ratio="16:9"
+                size="md"
+                title="Karapuu"
+                progress={64}
+                heading="Karapuu"
+                supporting="2H 9m left"
+              />
+            </div>
+            <div className="mt-4">
+              <Card ratio="16:9" size="lg" title="Maharani 4" live />
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-text-tertiary uppercase">
+              2:3 — small / regular / large
+            </p>
+            <div className="flex flex-wrap items-start gap-4">
+              {(["sm", "md", "lg"] as const).map((s) => (
+                <Card key={s} ratio="2:3" size={s} title={`Poster ${s}`} live />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="mb-3 text-[11px] font-semibold tracking-[0.1em] text-text-tertiary uppercase">
+              1:1 — small / regular / large / circle
+            </p>
+            <div className="flex flex-wrap items-start gap-4">
+              {(["sm", "md", "lg"] as const).map((s) => (
+                <Card
+                  key={s}
+                  ratio="1:1"
+                  size={s}
+                  title={`Square ${s}`}
+                  live
+                  tags={false}
+                />
+              ))}
+              <Card ratio="1:1" size="lg" shape="circle" title="Sports" />
+            </div>
+          </div>
+        </div>
+      </Specimen>
+
+      <Specimen
+        name="Banner"
+        purpose="The full-bleed promo, from Figma node 3279:21845. All three ratios carry a 2px white border; the hero is its own composition with a blurred tag, title art and a larger action pair, while 16:9 and 1:1 share one bottom bar."
+        props={[
+          {
+            name: "title",
+            type: "string",
+            description: "Seeds the artwork and the title-art lookup.",
+          },
+          {
+            name: "ratio",
+            type: '"hero" | "16:9" | "1:1"',
+            default: '"hero"',
+            description: "380×487, 380×213.75 or 380×380.",
+          },
+          {
+            name: "premium",
+            type: "boolean",
+            default: "true",
+            description:
+              "Crown — corner wash on the short ratios, inline beside the metadata on the hero.",
+          },
+          {
+            name: "tags",
+            type: "boolean",
+            default: "true",
+            description:
+              "New Release. Boxed and blurred on the hero, bare on the short ratios.",
+          },
+          {
+            name: "meta",
+            type: "string",
+            description: "The single metadata line on 16:9 and 1:1.",
+          },
+          {
+            name: "languages / genres",
+            type: "string",
+            description: "The two dot-separated facts under the hero's title art.",
+          },
+          {
+            name: "keyArt",
+            type: "string",
+            description:
+              "Stand-in lettering, used only until the matching title art exists in assets.",
+          },
+        ]}
+        dos={[
+          "Keep one banner per screen — a second competes with the first for the same job.",
+          "Supply real title art named after the show and drop keyArt.",
+          "Use hero at the top of a screen and the short ratios inside a rail.",
+        ]}
+        donts={[
+          "Don't put a banner and a large Card side by side; they read as the same weight.",
+          "Don't stack the actions on 16:9 — only 1:1 does that, and only because it is square.",
+          "Don't drop the 2px border; it is what separates the banner from the page on dark artwork.",
+        ]}
+        code={BANNER_USAGE}
+      >
+        <div className="flex flex-wrap items-start gap-6">
+          <Banner ratio="hero" title="Madhuvidhu" keyArt="Madhuvidhu" />
+          <div className="space-y-6">
+            <Banner ratio="16:9" title="Maharani 4" />
+            <Banner ratio="1:1" title="Shaitaan" />
+          </div>
+        </div>
+      </Specimen>
       <Specimen
         name="PosterCard"
         purpose="The 2:3 portrait card used by every rail and search grid. fluid drops the fixed width so it can fill a three-column grid; rank renders the oversized numeral used on Trending rows."

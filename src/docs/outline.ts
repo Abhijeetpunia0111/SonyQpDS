@@ -20,6 +20,8 @@ export const OUTLINE: Record<string, string[]> = {
     "Button",
     "Chip",
     "Badge",
+    "Card",
+    "Banner",
     "PosterCard",
     "LandscapeCard",
     "Rail + SectionHeader",

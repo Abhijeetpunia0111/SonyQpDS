@@ -19,44 +19,44 @@ import { profiles } from "@/data/content"
 const GROUPS = [
   [
     {
-      icon: <UserOutline size={24} />,
+      icon: <UserOutline size={20} />,
       title: "Account",
       subtitle: "Personal details & parental controls",
     },
     {
-      icon: <Plus size={24} />,
+      icon: <Plus size={20} />,
       title: "My List",
       subtitle: "View and manage your watchlist",
     },
     {
-      icon: <Receipt size={24} />,
+      icon: <Receipt size={20} />,
       title: "Manage Subscription",
       subtitle: "View purchase history and upgrade plans",
     },
     {
-      icon: <DeviceSwap size={24} />,
+      icon: <DeviceSwap size={20} />,
       title: "Manage Device",
       subtitle: "View Change & Delete Device",
     },
     {
-      icon: <Bubble size={24} />,
+      icon: <Bubble size={20} />,
       title: "Activate TV",
       subtitle: "Connect and manage TV settings",
     },
   ],
   [
     {
-      icon: <VideoCamera size={24} />,
+      icon: <VideoCamera size={20} />,
       title: "Video settings",
       subtitle: "Video quality, streaming, PIP mode",
     },
     {
-      icon: <Headphones size={24} />,
+      icon: <Headphones size={20} />,
       title: "Audio & Subtitle settings",
       subtitle: "Audio, language and subtitle preference",
     },
     {
-      icon: <QuestionCircle size={24} />,
+      icon: <QuestionCircle size={20} />,
       title: "FAQs",
       subtitle: "Answers to common questions",
     },
@@ -82,7 +82,9 @@ export default function ProfileScreen() {
         </div>
       }
     >
-      <div className="no-scrollbar flex gap-4 overflow-x-auto px-4">
+      {/* py-1 keeps the selected avatar's offset ring clear of the scroll clip:
+          overflow-x-auto also clips vertically, which was cutting the ring. */}
+      <div className="no-scrollbar flex gap-4 overflow-x-auto px-4 py-1">
         {profiles.map((p, i) => (
           <div
             key={p}

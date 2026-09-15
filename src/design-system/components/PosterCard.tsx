@@ -1,22 +1,36 @@
 import { Bolt, Crown } from "@/design-system/icons"
+
 import Artwork from "./Artwork"
+
 import Badge from "./Badge"
 
 export default function PosterCard({
   title,
+
   width = 112,
+
   fluid = false,
+
   premium = false,
+
   newRelease = false,
+
   rank,
+
   caption,
 }: {
   title: string
+
   width?: number
+
   fluid?: boolean
+
   premium?: boolean
+
   newRelease?: boolean
+
   rank?: number
+
   caption?: string
 }) {
   return (
@@ -25,10 +39,7 @@ export default function PosterCard({
       style={fluid ? undefined : { width }}
     >
       <div className="relative aspect-2/3 w-full">
-        <Artwork
-          title={title}
-          className="h-full w-full rounded-md"
-        />
+        <Artwork title={title} className="h-full w-full rounded-md" />
         {premium && (
           <Crown size={18} className="absolute top-1.5 left-1.5 text-gold" />
         )}

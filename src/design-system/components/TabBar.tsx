@@ -1,16 +1,21 @@
 export default function TabBar({
   tabs,
+
   active,
+
   onChange,
 }: {
   tabs: string[]
+
   active: string
+
   onChange?: (tab: string) => void
 }) {
   return (
     <div className="flex border-b border-border-subtle px-4">
       {tabs.map((tab) => {
         const isActive = tab === active
+
         return (
           <button
             key={tab}

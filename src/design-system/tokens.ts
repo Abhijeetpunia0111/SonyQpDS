@@ -40,6 +40,7 @@ export const primitives: Record<string, Primitive[]> = {
     { name: "violet-600", value: "#7818B4" },
     { name: "magenta-600", value: "#A21CAF" },
   ],
+  red: [{ name: "red-500", value: "#F53131" }],
   alpha: [{ name: "chip-fill", value: "#1D1F1E90" }],
 }
 
@@ -156,6 +157,11 @@ export const colors: ColorGroup[] = [
       token("gold-dim", "yellow-700", "Pressed state of a yellow affordance"),
       token("premium-start", "violet-600", "Upgrade badge gradient, start stop"),
       token("premium-end", "magenta-600", "Upgrade badge gradient, end stop"),
+      token(
+        "live",
+        "red-500",
+        "The dot on the LIVE badge — the only red in the system, reserved for live broadcast",
+      ),
     ],
   },
   {
